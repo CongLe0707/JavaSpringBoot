@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Thêm sách mới</title>
+  <th:block th:replace="layout :: link-css"></th:block>
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+<div class="container mt-4">
+  <h1>Thêm sách mới</h1>
+  <form th:action="@{/books/add}" th:object="${book}" method="post">
+    <div class="form-group">
+      <label for="title">Tiêu đề:</label>
+      <input class="form-control" type="text" th:field="*{title}" id="title">
+      <small class="form-text text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
+    </div>
+    <div class="form-group">
+      <label for="author">Tác giả:</label>
+      <input class="form-control" type="text" th:field="*{author}" id="author">
+      <small class="form-text text-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></small>
+    </div>
+    <div class="form-group">
+      <label for="price">Giá:</label>
+      <input class="form-control" type="number" step="0.01" th:field="*{price}" id="price">
+      <small class="form-text text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
+    </div>
+    <div class="form-group">
+      <label for="category">Thể loại:</label>
+      <select class="form-control" id="category" th:field="*{category.id}">
+        <option value="">-- Chọn thể loại --</option>
+        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+      </select>
+      <small class="form-text text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></small>
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu</button>
+  </form>
+  <br>
+  <a th:href="@{/books}">Quay lại danh sách</a>
+</div>
+<th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>
